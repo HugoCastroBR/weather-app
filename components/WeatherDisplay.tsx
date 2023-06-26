@@ -34,7 +34,6 @@ const WeatherDisplay = ({...weather}:weatherType) => {
 
     const {states, dispatch} = useWeatherApp()
     const theme = {...states.Theme}
-    console.log("weather: ", weather)
 
     return (
         <View style={styles.mainContainer}>

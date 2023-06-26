@@ -34,7 +34,6 @@ const Home = () => {
         load()
     }, [unit,states.Location.recentSearches])
     useEffect(() => {
-        console.log("Rodando")
         load()
     }, [])
 
@@ -47,29 +46,21 @@ const Home = () => {
                 alert('Access to localization is needed to run the app!');
                 return
             }
-            console.log(1)
             if(states.Location.recentSearches.length < 1){
-                console.log(2)
                 const location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest});
                 const { latitude, longitude } = location.coords;
-
                 const Url = `${baseUrl}lat=${latitude}&lon=${longitude}&units=${unit}&appid=${ApiKey}`
-
                 const res = await fetch(Url)
-                console.log("res ", res)
                 const infos = await res.json()
 
-                console.log("infos:", infos)
                 setWeather(infos)
             }else{
-                console.log(0)
                 const savedLocation = states.Location.recentSearches[0]
                 const { lat, long } = savedLocation;
                 const Url = `${baseUrl}lat=${lat}&lon=${long}&units=${unit}&appid=${ApiKey}`
                 
                 const res = await fetch(Url)
                 const infos = await res.json()
-                console.log("infos:", infos)
                 setWeather(infos)
             }
             

@@ -41,8 +41,6 @@ const UnitsPicker = ({unit,setUnit}:UnitPickerProps) => {
                 onValueChange={value => {
                     if(typeof(value) === 'string'){
                         setUnit(value)
-                    }else{
-                        console.log("visssh")
                     }
                 }}
                 selectedValue={unit}
