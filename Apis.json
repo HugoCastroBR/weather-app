@@ -1,0 +1,4 @@
+{
+  "WEATHER_API_URL":"https://openweathermap.org/",
+  "GEO_LOCATION_API_URL":"https://opencagedata.com/"
+}
