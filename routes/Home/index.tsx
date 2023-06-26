@@ -14,15 +14,15 @@ import useWeatherApp from './../../hooks/useWeatherApp';
 
 const Home = () => {
     const ApiKey = WEATHER_API_KEY
-    const baseUrl = `https://api.openweathermap.org/data/3.0/weather?`
+    const baseUrl = `https://api.openweathermap.org/data/2.5/weather?`
 
 
 
     const [weather, setWeather] = useState({
-        name: "Juiz de Fora",
-        main: { temp: 20, feels_like: 19, humidity: 61, pressure: 1015  },
+        name: "Loading...",
+        main: { temp: 0, feels_like: 0, humidity: 0, pressure: 0  },
         weather: [{ main: "", description: "", icon: "" }],
-        wind: { speed: 13 }
+        wind: { speed: 0 }
     } as weatherType)
 
     const [unit, setUnit] = useState('metric')
@@ -33,7 +33,10 @@ const Home = () => {
     useEffect(() => {
         load()
     }, [unit,states.Location.recentSearches])
-
+    useEffect(() => {
+        console.log("Rodando")
+        load()
+    }, [])
 
     const load = async () => {
 
@@ -44,25 +47,29 @@ const Home = () => {
                 alert('Access to localization is needed to run the app!');
                 return
             }
-
+            console.log(1)
             if(states.Location.recentSearches.length < 1){
-                const location = await Location.getCurrentPositionAsync();
+                console.log(2)
+                const location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest});
                 const { latitude, longitude } = location.coords;
+
                 const Url = `${baseUrl}lat=${latitude}&lon=${longitude}&units=${unit}&appid=${ApiKey}`
 
                 const res = await fetch(Url)
+                console.log("res ", res)
                 const infos = await res.json()
 
-
+                console.log("infos:", infos)
                 setWeather(infos)
             }else{
-
+                console.log(0)
                 const savedLocation = states.Location.recentSearches[0]
                 const { lat, long } = savedLocation;
                 const Url = `${baseUrl}lat=${lat}&lon=${long}&units=${unit}&appid=${ApiKey}`
-
+                
                 const res = await fetch(Url)
                 const infos = await res.json()
+                console.log("infos:", infos)
                 setWeather(infos)
             }
             
